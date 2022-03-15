@@ -8,14 +8,15 @@ import Login from "./Login";
 import { auth } from "./firebase";
 import { useStateValue} from "./StateProvider";
 import Payment from "./Payment";
+import Orders from "./Orders";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-const promise = loadStripe("pk_test_51KMQsRECN8owME30UcNm4uo0M3uTRQI6QEKXGOXVuktKlhCAIR8BX33okyDItqOKB8GC4IXpn86NGyI1iFnlbxKx00WNszxbkS");
+const promise = loadStripe('pk_test_51KMQsRECN8owME30UcNm4uo0M3uTRQI6QEKXGOXVuktKlhCAIR8BX33okyDItqOKB8GC4IXpn86NGyI1iFnlbxKx00WNszxbkS');
 
 
 function App() {
-  const [{}, dispatch] = useStateValue();
+  const [ {},dispatch] = useStateValue();
 
   useEffect(() => {
     // this will only run once the app component lods....
@@ -27,23 +28,29 @@ function App() {
         dispatch({
           type: "SET_USER",
           user: authUser
-        })
+        });
       } else {
         // the user is logged out
         dispatch({
           type: 'SET_USER',
           user: null
-        })
+        });
       }
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     // BEM
     <Router>
       <div className="app">
         <Switch>
-        <Route path="/login">
+          
+          <Route path="/orders">
+            <Header />
+            <Orders />
+          </Route>
+
+          <Route path="/login">
             <Login />
           </Route>
 
